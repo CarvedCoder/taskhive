@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 // import Link from 'next/link' // Remove this line
 // import Image from 'next/image' // Remove this line
 import { ArrowRight, ChevronRight } from 'lucide-react'
@@ -108,9 +109,9 @@ export default function HeroSection() {
                                         key={1}
                                         className="bg-white/20 backdrop-blur-sm rounded-[calc(var(--radius-xl)+0.125rem)] border border-white/30 p-0.5">
                                         <Button asChild size="lg" className="rounded-xl px-5 text-base bg-white text-black hover:bg-white/90">
-                                            <a href="#signup">
+                                            <Link to="/signup">
                                                 <span className="text-nowrap font-semibold">Get Started Free</span>
-                                            </a>
+                                            </Link>
                                         </Button>
                                     </div>
                                     <Button

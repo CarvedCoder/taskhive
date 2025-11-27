@@ -34,9 +34,9 @@ export const HeroHeader = () => {
                     <div
                         className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
                         <div className="flex w-full justify-between lg:w-auto">
-                            <a href="/" aria-label="home" className="flex items-center space-x-2">
+                            <Link to="/" aria-label="home" className="flex items-center space-x-2">
                                 <Logo />
-                            </a>
+                            </Link>
 
                             <button
                                 onClick={() => setMenuState(!menuState)}
@@ -103,22 +103,22 @@ export const HeroHeader = () => {
                                     variant="outline"
                                     size="sm"
                                     className={cn(isScrolled && 'lg:hidden')}>
-                                    <a href="#login">
+                                    <Link to="/login">
                                         <span>Login</span>
-                                    </a>
+                                    </Link>
                                 </Button>
                                 <Button asChild size="sm" className={cn(isScrolled && 'lg:hidden')}>
-                                    <a href="#signup">
+                                    <Link to="/signup">
                                         <span>Join TaskHive</span>
-                                    </a>
+                                    </Link>
                                 </Button>
                                 <Button
                                     asChild
                                     size="sm"
                                     className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}>
-                                    <a href="#signup">
+                                    <Link to="/signup">
                                         <span>Join TaskHive</span>
-                                    </a>
+                                    </Link>
                                 </Button>
                             </div>
                         </div>
