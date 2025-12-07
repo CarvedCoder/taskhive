@@ -4,6 +4,7 @@ import { ArrowLeft, Eye, EyeOff, Mail } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { TextEffect } from '@/components/ui/text-effect'
 import { AnimatedGroup } from '@/components/ui/animated-group'
+import { Logo } from '@/components/logo'
 
 const transitionVariants = {
     item: {
@@ -71,6 +72,18 @@ export default function LoginPage() {
 
             <div className="relative z-10 flex min-h-screen items-center justify-center px-6 py-12">
                 <div className="w-full max-w-md">
+                    {/* Logo */}
+                    <div className="flex justify-center mb-8">
+                        <div className="flex items-center space-x-3">
+                            <img
+                                src="/Taskhive_logo-removebg.png"
+                                alt="TaskHive logo"
+                                className="w-12 h-12 object-contain"
+                            />
+                            <span className="text-2xl font-bold text-white">TaskHive</span>
+                        </div>
+                    </div>
+                    
                     <AnimatedGroup variants={transitionVariants}>
                         {/* Header */}
                         <div className="text-center mb-8">
