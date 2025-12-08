@@ -4,6 +4,7 @@ import { ArrowLeft, Eye, EyeOff, Mail } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { TextEffect } from '@/components/ui/text-effect'
 import { AnimatedGroup } from '@/components/ui/animated-group'
+import { supabase } from "@/supabaseClient";
 
 const transitionVariants = {
     item: {
@@ -41,16 +42,56 @@ export default function LoginPage() {
         }))
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        // Handle form submission here
-        console.log('Login form submitted:', formData)
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: formData.email,
+            password: formData.password
+        });
+
+        if (error) {
+            alert(error.message);
+            return;
+        }
+
+        // Login successful
+        console.log("Logged in:", data.user);
+        const { data: sessionData } = await supabase.auth.getSession();
+        const token = sessionData?.session?.access_token;
+        console.log("Bearer Token:", token);
+        window.location.href = "/";
+    } catch (err) {
+        console.error(err);
+        alert("Something went wrong. Try again.");
+        }
+    };
+    const handleOAuthLogin = async (provider) => {
+  try {
+    // Use redirect flow. redirectTo should match the Redirect URL you added in Supabase
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: window.location.origin + "/auth/callback" // e.g. https://taskhive.shop/auth/callback
+      }
+    });
+
+    if (error) {
+      console.error("OAuth signIn error:", error);
+      alert(error.message || "OAuth sign-in failed");
+      return;
     }
 
-    const handleOAuthLogin = (provider) => {
-        // Handle OAuth login here
-        console.log(`OAuth login with ${provider}`)
-    }
+    // signInWithOAuth typically triggers a redirect — data contains url for the provider
+    // If this returns data.url you can optionally window.location = data.url but supabase handles redirect by itself.
+    console.log("OAuth sign-in started:", data);
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong starting OAuth flow.");
+        }
+    };
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">

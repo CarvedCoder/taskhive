@@ -17,7 +17,7 @@ async def create_todo(payload: TodoCreate, user=Depends(get_current_user)):
         "description": payload.description,
         "due_date": payload.due_date,
         "completed": payload.completed
-    }).select("*").execute()
+    }).execute()
     data = getattr(resp, "data", None) or resp.get("data", None) or resp
     if not data:
         raise HTTPException(status_code=500, detail="Insert failed")
