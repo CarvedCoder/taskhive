@@ -80,10 +80,30 @@ export default function SignupPage() {
     };
 
 
-    const handleOAuthSignup = (provider) => {
-        // Handle OAuth signup here
-        console.log(`OAuth signup with ${provider}`)
-    }
+    const handleOAuthSignup = async (provider) => {
+         try {
+            // Use redirect flow. redirectTo should match the Redirect URL you added in Supabase
+            const { data, error } = await supabase.auth.signInWithOAuth({
+              provider,
+              options: {
+                redirectTo: window.location.origin + "/auth/callback" // e.g. https://taskhive.shop/auth/callback
+              }
+            });
+        
+            if (error) {
+              console.error("OAuth signIn error:", error);
+              alert(error.message || "OAuth sign-in failed");
+              return;
+            }
+        
+            // signInWithOAuth typically triggers a redirect — data contains url for the provider
+            // If this returns data.url you can optionally window.location = data.url but supabase handles redirect by itself.
+            console.log("OAuth sign-in started:", data);
+          } catch (err) {
+            console.error(err);
+            alert("Something went wrong starting OAuth flow.");
+                }
+            };
 
     const passwordsMatch = formData.password && formData.confirmPassword && formData.password === formData.confirmPassword
 
