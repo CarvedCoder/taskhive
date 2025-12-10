@@ -5,7 +5,9 @@ backend/app/core/__pycache__
 backend/app/db/__pycache__
 backend/app/schemas/__pycache__
 backend/app/services/__pycache__
+backend/app/utils/__pycache__
 backend/.env
 backend/logs/taskhive.log
 backend.zip
 frontend.zip
+client_secret_761106171081-7bdku7297cf68svtap30ilhr7obod6al.apps.googleusercontent.com.json

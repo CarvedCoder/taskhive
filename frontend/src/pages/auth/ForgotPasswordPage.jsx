@@ -4,6 +4,7 @@ import { ArrowLeft, Mail, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { TextEffect } from '@/components/ui/text-effect'
 import { AnimatedGroup } from '@/components/ui/animated-group'
+import { supabase } from "@/supabaseClient";
 
 const transitionVariants = {
     item: {
@@ -29,12 +30,21 @@ export default function ForgotPasswordPage() {
     const [email, setEmail] = useState('')
     const [isSubmitted, setIsSubmitted] = useState(false)
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        // Handle password reset request
-        console.log('Password reset requested for:', email)
-        setIsSubmitted(true)
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: "https://taskhive.shop/reset-password"
+    });
+
+    if (error) {
+        alert(error.message);
+        return;
     }
+
+    setIsSubmitted(true);
+    };
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden">

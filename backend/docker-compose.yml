@@ -2,14 +2,16 @@ version: '3.8'
 services:
   backend:
     build: .
+    # For local dev only: mount source so edits reflect instantly
     volumes:
       - ./app:/app/app
-      - ./.env:/app/.env
+      - ./.env:/app/.env        # ok for local, DON'T commit .env
     ports:
       - "8000:8000"
+    env_file:
+      - .env                   # use env_file so compose injects vars
     environment:
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
-      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
       - APP_HOST=0.0.0.0
       - APP_PORT=8000
+    command: >
+      sh -c "uvicorn app.main:app --host ${APP_HOST} --port ${APP_PORT} --reload"

@@ -4,6 +4,8 @@ import { ArrowLeft, Eye, EyeOff, Mail, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { TextEffect } from '@/components/ui/text-effect'
 import { AnimatedGroup } from '@/components/ui/animated-group'
+
+import { supabase } from "@/supabaseClient";
 import { Logo } from '@/components/logo'
 
 const transitionVariants = {
@@ -46,15 +48,37 @@ export default function SignupPage() {
         }))
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        // Handle form submission here
-        if (formData.password !== formData.confirmPassword) {
-            alert('Passwords do not match!')
-            return
-        }
-        console.log('Signup form submitted:', formData)
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+        alert("Passwords do not match!");
+        return;
     }
+
+    try {
+        const { data, error } = await supabase.auth.signUp({
+            email: formData.email,
+            password: formData.password
+        });
+
+        if (error) {
+            alert(error.message);
+            return;
+        }
+
+        console.log("Signup success:", data.user);
+
+        // redirect user after signup
+        // If email confirmation is required → show message instead
+        window.location.href = "/login";
+
+    } catch (err) {
+        console.error(err);
+        alert("Something went wrong. Try again.");
+        }
+    };
+
 
     const handleOAuthSignup = (provider) => {
         // Handle OAuth signup here

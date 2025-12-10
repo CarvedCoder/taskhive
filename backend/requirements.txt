@@ -17,4 +17,4 @@ supabase
 slowapi>=0.1.4
 sentry-sdk
 secure
-
+gunicorn
