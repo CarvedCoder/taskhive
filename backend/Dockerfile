@@ -23,7 +23,6 @@ RUN pip install --upgrade pip \
 
 # copy app code
 COPY ./app /app/app
-COPY ./scripts /app/scripts 
 
 # create a non-root user and chown
 RUN useradd --create-home appuser \
