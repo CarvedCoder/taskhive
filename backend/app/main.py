@@ -1,12 +1,9 @@
 import uvicorn
-from fastapi import FastAPI, Request
-from fastapi.responses import Response
+from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from starlette.middleware.trustedhost import TrustedHostMiddleware
-from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 from contextlib import asynccontextmanager
 
-from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi import Limiter
 from slowapi.util import get_remote_address
 
 from secure import Secure 
@@ -36,12 +33,11 @@ app = FastAPI(
 app.middleware("http")(add_security_headers_middleware)
 
 # Optional: enforce HTTPS in production (only enable when you actually run under HTTPS)
-# app.add_middleware(HTTPSRedirectMiddleware)
 
 # CORS — lock this down in production to your frontend origin(s)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000","https://taskhive.shop",
+    allow_origins=["https://taskhive.shop","http://localhost:3000",
                    "https://www.taskhive.shop"],
     allow_credentials=True,
     allow_methods=["*"],
@@ -52,7 +48,6 @@ secure_headers = (
     Secure()
     
 )
-
 app.include_router(todos.router)
 app.include_router(study.router)
 app.include_router(marketplace.router)
