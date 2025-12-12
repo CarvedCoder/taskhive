@@ -74,7 +74,7 @@ export default function LoginPage() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: window.location.origin + "/auth/callback" // e.g. https://taskhive.shop/auth/callback
+        redirectTo: `${import.meta.env.VITE_APP_URL}/`
       }
     });
 

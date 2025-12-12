@@ -42,7 +42,7 @@ app.middleware("http")(add_security_headers_middleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000","https://taskhive.shop",
-                   "https://www.taskhive.shop"],  # change to your frontend origin(s)
+                   "https://www.taskhive.shop"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
